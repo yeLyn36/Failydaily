@@ -17,8 +17,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class UseDB {
 
-    private static final String DATABASE_NAME = "failydaily.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "failydaily.db"; //DB명
+    private static final int DATABASE_VERSION = 1; //버전
     public static SQLiteDatabase mDB;
     private DatabaseHelper mDBHelper;
     private Context mCtx;
@@ -35,7 +35,7 @@ public class UseDB {
             db.execSQL(CreateDB.DataBases._CREATE2);
             db.execSQL(CreateDB.DataBases._CREATE3);
             System.out.println("Create DB");
-        }
+        } //TABLE 생성
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
@@ -43,7 +43,7 @@ public class UseDB {
             db.execSQL("DROP TABLE IF EXISTS "+CreateDB.DataBases._TABLENAME2);
             db.execSQL("DROP TABLE IF EXISTS "+CreateDB.DataBases._TABLENAME3);
             onCreate(db);
-        }
+        } //DB 업그레이드
     }
 
     public UseDB(Context context){
@@ -54,7 +54,7 @@ public class UseDB {
         mDBHelper = new DatabaseHelper(mCtx, DATABASE_NAME, null, DATABASE_VERSION);
         mDB = mDBHelper.getWritableDatabase();
         return this;
-    }
+    } //DB 생성
 
     public void create(){
         mDBHelper.onCreate(mDB);
@@ -67,10 +67,10 @@ public class UseDB {
 
     //Category Method
     //Insert Category
-    public long makeCategory(String name){
-        ContentValues values = new ContentValues();
-        values.put(CreateDB.DataBases.name, name);
-        return mDB.insert(CreateDB.DataBases._TABLENAME3, "", values);
+    public void makeCategory(String name){
+        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME3 + "(name) values (\"" + name + "\")";
+        mDB.execSQL(sql);
+        System.out.println(name);
     }
     // Delete Category
     public boolean deleteCategory(String name){
@@ -78,7 +78,7 @@ public class UseDB {
         return mDB.delete(CreateDB.DataBases._TABLENAME3, "name="+name, null) > 0;
     }
     // Select Category
-    public Cursor selectCategory(){
+    public Cursor selectCategories(){
         return mDB.query(CreateDB.DataBases._TABLENAME3, null, null, null, null, null, null);
     }
 
@@ -92,36 +92,57 @@ public class UseDB {
     //Diary Method
     //select Diary
 
+
     //Insert Diary
+    public void makeDiary(long id, String title, String subtitle, String content, String category, String date){
+        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME1 + "(id, title, subtitle, content, category, date) values (\"" + id + "\", \"" + title + "\", \"" + subtitle + "\", \"" + content + "\", \"" + category + "\", \"" + date + "\")";
+        mDB.execSQL(sql);
+        System.out.println(id);
+    }
 
     //Update Diary
-    public boolean updateColumn(long id, String title, String subtitle, String content , String category, String datetime){
-        ContentValues values = new ContentValues();
-        values.put(CreateDB.DataBases._ID, id);
-        values.put(CreateDB.DataBases.title, title);
-        values.put(CreateDB.DataBases.subtitle, subtitle);
-        values.put(CreateDB.DataBases.content, content);
-        values.put(CreateDB.DataBases.category, category);
-        values.put(CreateDB.DataBases.date, datetime);
-        return mDB.update(CreateDB.DataBases._TABLENAME1, values, "_ID=" + id, null) > 0;
+    public void updateDiary(long id, String title, String subtitle, String content , String category, String datetime){
+        String sql = "update " + CreateDB.DataBases._TABLENAME1 + "set id = \"" + id + "\", " +
+                "title = \"" + title + "\", " + "subtitle = \"" + subtitle + "\", " + "content = \"" + content + "\", " +
+                "category = \"" + category + "\", " + "date = \"" + datetime + "\";";
+
+        mDB.execSQL(sql);
+        System.out.println(true);
     }
 
     //Delete Diary
-
+    public boolean deleteDiary(long id){
+        return mDB.delete(CreateDB.DataBases._TABLENAME1, "_ID="+id, null) > 0;
+    }
 
     //Fairy Method
     //Insert Fairy
+    public void makeFairy(long id, String name, int age, String category, int num) {
+        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME2 + "(id, name, age, category, num) values (\"" + id + "\", \"" + name + "\", \"" + age + "\", \"" + category + "\", \"" + num + "\")";
+        mDB.execSQL(sql);
+        System.out.println(id);
+    }
 
     //Delete Fairy
-
+    public boolean deleteFairy(String category){
+        return mDB.delete(CreateDB.DataBases._TABLENAME2, "category="+category, null) > 0;
+    }
 
     //FariyList Method
     //Select FairyList
-
+    public Cursor selectFairyList(){
+        return mDB.query(CreateDB.DataBases._TABLENAME2, null, null, null, null, null, null);
+    }
 
     //Graph Method
     //Show graphOfCategory
+    //select category()
+    //리스트에 카데고리 별로 나누기
+    //리턴 리스트
 
     //Show graphOfYear
+    //select category
+    //리스트에 날짜별로 나누기
+    //리턴 리스트
 
 }
