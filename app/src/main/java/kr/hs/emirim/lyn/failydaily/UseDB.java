@@ -60,4 +60,5 @@ public class UseDB {
     public void close(){
         mDB.close();
     }
+    // ..
 }
