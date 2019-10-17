@@ -1,6 +1,8 @@
 package kr.hs.emirim.lyn.failydaily;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.content.Context;
 import android.database.Cursor;
@@ -59,5 +61,15 @@ public class UseDB {
 
     public void close(){
         mDB.close();
+    }
+
+    public long makeCategory(String name){
+        ContentValues values = new ContentValues();
+        values.put(CreateDB.DataBases.name, name);
+        return mDB.insert(CreateDB.DataBases._TABLENAME3, null, values);
+    }
+
+    public Cursor selectCategory(){
+        return mDB.query(CreateDB.DataBases._TABLENAME3, null, null, null, null, null, null);
     }
 }
