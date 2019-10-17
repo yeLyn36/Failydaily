@@ -25,6 +25,7 @@ public class UseDB {
         @Override
         public void onCreate(SQLiteDatabase db){
             db.execSQL(CreateDB.DataBases._CREATE);
+            db.execSQL(CreateDB.DataBases._CREATE2);
         }
 
         @Override
