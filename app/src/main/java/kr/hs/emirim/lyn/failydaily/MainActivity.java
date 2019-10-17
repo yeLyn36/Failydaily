@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       
         user = new UseDB(this);
         user.open();
+        user.makeCategory("학교");
+        user.makeCategory("친구");
+
 //        user.create();
 
         // user.close();
