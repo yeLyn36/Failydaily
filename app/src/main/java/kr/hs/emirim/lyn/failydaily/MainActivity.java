@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       
         user = new UseDB(this);
         user.open();
-        user.makeCategory("학교");
-        user.makeCategory("친구");
+//        user.makeCategory("학교");
+//        user.makeCategory("친구");
 
 //        user.create();
 
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(DialogInterface dialog, int which) {
                 String name = "카테고리 이름은 : " + nameEditText.getText().toString();
 
-                user.makeCategory(nameEditText.getText().toString());
+//                user.makeCategory(nameEditText.getText().toString());
                 categoryInfoArrayList.add(new CategoryInfo(nameEditText.getText().toString()));
                 mRecyclerView.setAdapter(myAdapter);
 
