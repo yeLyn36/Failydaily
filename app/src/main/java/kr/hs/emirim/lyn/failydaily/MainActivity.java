@@ -7,15 +7,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
     Toolbar tb;
+    RecyclerView mRecyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
+    EditText txtResult;
+    ArrayList<CategoryInfo> categoryInfoArrayList = new ArrayList<>();
+    MyAdapter myAdapter = new MyAdapter(categoryInfoArrayList);       // -> list는 데이터베이스에 있는 리스트 넣으면 될듯
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +97,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
 
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // Todo : makeCategory()
+        categoryInfoArrayList.add(new CategoryInfo("학교"));
+        categoryInfoArrayList.add(new CategoryInfo("친구"));
+
+        mRecyclerView.setAdapter(myAdapter);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_main_drawer_root);
         navigationView = (NavigationView) findViewById(R.id.nv_main_navigation_root);
         drawerToggle = new ActionBarDrawerToggle(
@@ -95,6 +119,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
         drawerLayout.addDrawerListener(drawerToggle);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void OnClickHandler(View view) {
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_sub, null);
+        final EditText nameEditText = (EditText)dialogView.findViewById(R.id.name);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = "카테고리 이름은 : " + nameEditText.getText().toString();
+                categoryInfoArrayList.add(new CategoryInfo(nameEditText.getText().toString()));
+                mRecyclerView.setAdapter(myAdapter);
+
+                Toast.makeText(getApplicationContext(), nameEditText.getText().toString() + " 카테고리가 생성되었습니다.", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "취소되었습니다.", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
