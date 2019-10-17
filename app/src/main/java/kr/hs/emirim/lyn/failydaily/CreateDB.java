@@ -36,6 +36,6 @@ public final class CreateDB {
                 +num+" integer not null)";
 
         public static final String _CREATE3 = "create table if not exists " + _TABLENAME3 + "("
-                +name+"text not null primary key)";
+                +name+" text not null primary key)";
     }
 }

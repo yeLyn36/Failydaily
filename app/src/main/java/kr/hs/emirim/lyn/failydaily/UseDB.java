@@ -22,7 +22,6 @@ public class UseDB {
     public static SQLiteDatabase mDB;
     private DatabaseHelper mDBHelper;
     private Context mCtx;
-    Context ctx;
 
     private class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -53,7 +52,6 @@ public class UseDB {
 
     public UseDB open() throws SQLException {
         mDBHelper = new DatabaseHelper(mCtx, DATABASE_NAME, null, DATABASE_VERSION);
-        System.out.println("DB open");
         mDB = mDBHelper.getWritableDatabase();
         return this;
     }
@@ -66,16 +64,13 @@ public class UseDB {
         mDB.close();
     }
 
-    public void makeCategory(){
-
-    }
 
     //Category Method
     //Insert Category
     public long makeCategory(String name){
         ContentValues values = new ContentValues();
         values.put(CreateDB.DataBases.name, name);
-        return mDB.insert(CreateDB.DataBases._TABLENAME3, null, values);
+        return mDB.insert(CreateDB.DataBases._TABLENAME3, "", values);
     }
     // Delete Category
     public boolean deleteCategory(String name){
