@@ -15,7 +15,7 @@ public final class CreateDB {
         public static final String name = "name";
         public static final String age = "age";
         public static final String num = "num";
-        public static final String _TABLENAME1 = "dairyDB";
+        public static final String _TABLENAME1 = "diaryDB";
         public static final String _TABLENAME2 = "FairyDB";
         public static final String _CREATE = "create table if not exists "+_TABLENAME1+"("
                 +_ID+" integer primary key autoincrement, "
