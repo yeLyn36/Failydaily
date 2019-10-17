@@ -7,14 +7,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
-
-    UseDB user;
+public class FairyListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_fairy_list);
 
         View view = getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -27,11 +25,5 @@ public class MainActivity extends AppCompatActivity {
             // 21 버전 이상일 때
             getWindow().setStatusBarColor(Color.parseColor("#efb951"));
         }
-
-        user = new UseDB(this);
-        user.open();
-//        user.create();
-
-        // user.close();
     }
 }
