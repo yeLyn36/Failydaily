@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar tb;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
+    EditText txtResult;
     ArrayList<CategoryInfo> categoryInfoArrayList = new ArrayList<>();
     MyAdapter myAdapter = new MyAdapter(categoryInfoArrayList);       // -> list는 데이터베이스에 있는 리스트 넣으면 될듯
 
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
       
         user = new UseDB(this);
         user.open();
-//        user.makeCategory("학교");
-//        user.makeCategory("친구");
+        user.makeCategory("학교");
+        user.makeCategory("친구");
 
 //        user.create();
 
@@ -112,8 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        // Todo : makeCategory()
         categoryInfoArrayList.add(new CategoryInfo("학교"));
         categoryInfoArrayList.add(new CategoryInfo("친구"));
+
         mRecyclerView.setAdapter(myAdapter);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.dl_main_drawer_root);
@@ -139,11 +142,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 String name = "카테고리 이름은 : " + nameEditText.getText().toString();
-
-//                user.makeCategory(nameEditText.getText().toString());
-
                 categoryInfoArrayList.add(new CategoryInfo(nameEditText.getText().toString()));
                 mRecyclerView.setAdapter(myAdapter);
 

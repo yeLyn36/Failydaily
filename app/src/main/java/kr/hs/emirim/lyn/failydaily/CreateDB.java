@@ -24,7 +24,7 @@ public final class CreateDB {
                 +title+" text not null , " //일기장 제목
                 +content+" text not null , " //일기장 내용
                 +category+" text not null , " //일기장 카테고리
-                +date+" text not null DEFAULT (datetime('now', 'localtime')))"; //일기장 날짜
+                +date+" text not null)"; //일기장 날짜
 
         public static final String _CREATE2 = "create table if not exists "+_TABLENAME2+"(" //요정 DB
                 +_ID+" integer primary key autoincrement, " //요정 아이디

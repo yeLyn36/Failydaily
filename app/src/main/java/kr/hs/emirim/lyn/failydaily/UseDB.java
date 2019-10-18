@@ -121,10 +121,10 @@ public class UseDB {
         return Diary;
     }
     //Insert Diary
-    public void makeDiary(long id, String title, String content, String category, String date){
-        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME1 + "(id, title, content, category, date) values (\"" + id + "\", \"" + title + "\", \"" + content + "\", \"" + category + "\", \"" + date + "\")";
+    public void makeDiary(String title, String content, String category, String date){
+        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME1 + "(title, content, category, date) values (\"" + title + "\", \"" + content + "\", \"" + category + "\", \"" + date + "\")";
         mDB.execSQL(sql);
-        System.out.println(id);
+        System.out.println(title);
     }
     //Update Diary
     public void updateDiary(long id, String title, String content , String category, String datetime){
