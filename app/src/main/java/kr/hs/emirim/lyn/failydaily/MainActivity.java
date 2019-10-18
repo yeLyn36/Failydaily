@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String name = "카테고리 이름은 : " + nameEditText.getText().toString();
+                String name = nameEditText.getText().toString();
+                user.makeCategory(name);
                 categoryInfoArrayList.add(new CategoryInfo(nameEditText.getText().toString()));
                 mRecyclerView.setAdapter(myAdapter);
 
