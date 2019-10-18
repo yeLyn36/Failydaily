@@ -17,6 +17,7 @@ public final class CreateDB {
 
         public static final String _TABLENAME1 = "diaryDB";
         public static final String _TABLENAME2 = "FairyDB";
+        public static final String _TABLENAME3 = "CategoryDB";
 
         public static final String _CREATE = "create table if not exists "+_TABLENAME1+"(" //일기장 DB
                 +_ID+" integer primary key autoincrement, " //일기장의 아이디
