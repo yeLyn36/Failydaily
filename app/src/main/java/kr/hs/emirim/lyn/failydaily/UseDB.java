@@ -1,8 +1,6 @@
 package kr.hs.emirim.lyn.failydaily;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,11 +16,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class UseDB {
 
-    private static final String DATABASE_NAME = "failydaily.db"; //DB명
-    private static final int DATABASE_VERSION = 1; //버전
+    private static final String DATABASE_NAME = "failydaily.db";
+    private static final int DATABASE_VERSION = 1;
     public static SQLiteDatabase mDB;
     private DatabaseHelper mDBHelper;
     private Context mCtx;
+    Context ctx;
 
     private class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -34,17 +33,14 @@ public class UseDB {
         public void onCreate(SQLiteDatabase db){
             db.execSQL(CreateDB.DataBases._CREATE);
             db.execSQL(CreateDB.DataBases._CREATE2);
-            db.execSQL(CreateDB.DataBases._CREATE3);
-            System.out.println("Create DB");
-        } //TABLE 생성
+        }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
             db.execSQL("DROP TABLE IF EXISTS "+CreateDB.DataBases._TABLENAME1);
             db.execSQL("DROP TABLE IF EXISTS "+CreateDB.DataBases._TABLENAME2);
-            db.execSQL("DROP TABLE IF EXISTS "+CreateDB.DataBases._TABLENAME3);
             onCreate(db);
-        } //DB 업그레이드
+        }
     }
 
     public UseDB(Context context){
@@ -53,9 +49,10 @@ public class UseDB {
 
     public UseDB open() throws SQLException {
         mDBHelper = new DatabaseHelper(mCtx, DATABASE_NAME, null, DATABASE_VERSION);
+        System.out.println("DB open");
         mDB = mDBHelper.getWritableDatabase();
         return this;
-    } //DB 생성
+    }
 
     public void create(){
         mDBHelper.onCreate(mDB);
@@ -64,7 +61,6 @@ public class UseDB {
     public void close(){
         mDB.close();
     }
-
 
     //Category Method
     //Insert Category
