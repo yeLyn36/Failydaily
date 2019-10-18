@@ -43,7 +43,7 @@ public class DairyActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btSave: {
-
+                usedb.makeDiary();
             }
             case R.id.btDelete: {
 
