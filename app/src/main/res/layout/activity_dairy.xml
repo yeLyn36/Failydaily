@@ -46,19 +46,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/toolbar_delete"
+        <Button
+            android:id="@+id/btDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:background="@android:drawable/ic_menu_delete"
             android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/toolbar_save"
+            app:layout_constraintEnd_toStartOf="@id/btSave"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/toolbar_save"
+        <Button
+            android:id="@+id/btSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"

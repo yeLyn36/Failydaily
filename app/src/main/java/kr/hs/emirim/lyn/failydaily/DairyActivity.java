@@ -2,19 +2,23 @@ package kr.hs.emirim.lyn.failydaily;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-import android.widget.Toolbar;
+import android.widget.Button;
+import android.widget.EditText;
 
-public class DairyActivity extends AppCompatActivity {
+public class DairyActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Toolbar mytoolbar;
+    EditText title = (EditText) findViewById(R.id.title);
+    EditText content = (EditText) findViewById(R.id.content);
+    Button btSave = (Button)findViewById(R.id.btSave);
+    Button btDelete = (Button)findViewById(R.id.btDelete);
+
+    UseDB usedb;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +37,17 @@ public class DairyActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.parseColor("#efb951"));
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btSave: {
+
+            }
+            case R.id.btDelete: {
+
+            }
+        }
     }
 }
