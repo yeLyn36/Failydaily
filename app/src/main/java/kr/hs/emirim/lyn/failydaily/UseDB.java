@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -73,46 +74,74 @@ public class UseDB {
         System.out.println(name);
     }
     // Delete Category
-    public boolean deleteCategory(String name){
+    public void deleteCategory(String name){
         // deleteFairy(String category);
-        return mDB.delete(CreateDB.DataBases._TABLENAME3, "name="+name, null) > 0;
+        mDB.delete(CreateDB.DataBases._TABLENAME3, "name="+name, null);
     }
     // Select Category
-    public Cursor selectCategories(){
-        return mDB.query(CreateDB.DataBases._TABLENAME3, null, null, null, null, null, null);
+    public ArrayList<String> selectCategories(){
+        ArrayList<String> categories = new ArrayList<>();
+        String sql = "select * from " + CreateDB.DataBases._TABLENAME3 ;
+        Cursor cursor = mDB.rawQuery(sql, null);
+        while(cursor.moveToNext()){
+            categories.add(cursor.getString(0));
+        }
+        return categories;
     }
 
 
     //DiaryList Method
     //select DiaryList
-    public Cursor selectDiaryList(){
-        return mDB.query(CreateDB.DataBases._TABLENAME1, null, null, null, null, null, null);
+    public ArrayList<String> selectDiaryList(){
+        ArrayList<String> dairyList = new ArrayList<>();
+        String sql = "select title from " + CreateDB.DataBases._TABLENAME1;
+        Cursor cursor = mDB.rawQuery(sql, null);
+        while (cursor.moveToNext()){
+            int i = 0;
+            dairyList.add(cursor.getString(i++));
+        }
+        return dairyList;
     }
 
     //Diary Method
     //select Diary
-
-
+    public String[] selectDiary(long id){
+        String[] Diary = new String[6];
+        String sql = "select * from diaryDB where id = \"" + id + "\"";
+        String strId = String.valueOf(id);
+        Cursor cursor = mDB.rawQuery(sql, null);
+        if(cursor.moveToFirst()) {
+            String ID = cursor.getString(0);
+            if (ID.equals(String.valueOf(id))) {
+                for (int i = 1; i < 6; i++) {
+                    Diary[i] = cursor.getString(i);
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+        return Diary;
+    }
     //Insert Diary
-    public void makeDiary(long id, String title, String subtitle, String content, String category, String date){
-        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME1 + "(id, title, subtitle, content, category, date) values (\"" + id + "\", \"" + title + "\", \"" + subtitle + "\", \"" + content + "\", \"" + category + "\", \"" + date + "\")";
+    public void makeDiary(long id, String title, String content, String category, String date){
+        String sql = "insert or replace into " + CreateDB.DataBases._TABLENAME1 + "(id, title, content, category, date) values (\"" + id + "\", \"" + title + "\", \"" + content + "\", \"" + category + "\", \"" + date + "\")";
         mDB.execSQL(sql);
         System.out.println(id);
     }
-
     //Update Diary
-    public void updateDiary(long id, String title, String subtitle, String content , String category, String datetime){
+    public void updateDiary(long id, String title, String content , String category, String datetime){
         String sql = "update " + CreateDB.DataBases._TABLENAME1 + "set id = \"" + id + "\", " +
-                "title = \"" + title + "\", " + "subtitle = \"" + subtitle + "\", " + "content = \"" + content + "\", " +
+                "title = \"" + title + "\", " + "content = \"" + content + "\", " +
                 "category = \"" + category + "\", " + "date = \"" + datetime + "\";";
 
         mDB.execSQL(sql);
         System.out.println(true);
     }
-
     //Delete Diary
-    public boolean deleteDiary(long id){
-        return mDB.delete(CreateDB.DataBases._TABLENAME1, "_ID="+id, null) > 0;
+    public void deleteDiary(long id){
+        mDB.delete(CreateDB.DataBases._TABLENAME1, "_ID="+id, null);
     }
 
     //Fairy Method
@@ -122,7 +151,6 @@ public class UseDB {
         mDB.execSQL(sql);
         System.out.println(id);
     }
-
     //Delete Fairy
     public boolean deleteFairy(String category){
         return mDB.delete(CreateDB.DataBases._TABLENAME2, "category="+category, null) > 0;
@@ -130,19 +158,29 @@ public class UseDB {
 
     //FariyList Method
     //Select FairyList
-    public Cursor selectFairyList(){
-        return mDB.query(CreateDB.DataBases._TABLENAME2, null, null, null, null, null, null);
-    }
+    public ArrayList<String[]> selectFairyList(){
+        ArrayList<String[]> fairyList = new ArrayList<>();
+        String[] fairyArray = new String[3];
+        String sql = "select name, age, category from " + CreateDB.DataBases._TABLENAME2;
+        Cursor cursor = mDB.rawQuery(sql, null);
+        while (cursor.moveToNext()){
+            fairyArray[0] = cursor.getString(0);
+            fairyArray[1] = cursor.getString(1);
+            fairyArray[2] = cursor.getString(2);
+            fairyList.add(fairyArray);
+        }
+        return fairyList;
+    } //fairyList안에 문자열 배열로 요정 이름, 나이, 카테고리 넣어놓음
 
     //Graph Method
     //Show graphOfCategory
-    //select category()
-    //리스트에 카데고리 별로 나누기
-    //리턴 리스트
-
-    //Show graphOfYear
-    //select category
-    //리스트에 날짜별로 나누기
-    //리턴 리스트
-
+    public void graphOfCategory() {
+        //select category()
+        String sql = "select name from CategoryDB";
+        Cursor cursor = mDB.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            //리스트에 카데고리 별로 나누기
+            //리턴 리스트
+        }
+    }
 }
