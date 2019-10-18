@@ -174,13 +174,17 @@ public class UseDB {
 
     //Graph Method
     //Show graphOfCategory
-    public void graphOfCategory() {
+    public ArrayList<String[]> graphOfCategory() {
         //select category()
-        String sql = "select name from CategoryDB";
+        ArrayList<String[]> graph = new ArrayList<>();
+        String[] categoryCount = new String[2];
+        String sql = "select name, count(*) as count from CategoryDB";
         Cursor cursor = mDB.rawQuery(sql, null);
         while (cursor.moveToNext()) {
-            //리스트에 카데고리 별로 나누기
-            //리턴 리스트
+            categoryCount[0] = cursor.getString(0);
+            categoryCount[1] = String.valueOf(cursor.getInt(1));
+            graph.add(categoryCount);
         }
+        return graph;
     }
 }
