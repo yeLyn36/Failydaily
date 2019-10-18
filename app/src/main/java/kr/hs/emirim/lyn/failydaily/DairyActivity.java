@@ -46,7 +46,7 @@ public class DairyActivity extends AppCompatActivity implements View.OnClickList
                 usedb.makeDiary();
             }
             case R.id.btDelete: {
-
+                usedb.deleteDiary();
             }
         }
     }
